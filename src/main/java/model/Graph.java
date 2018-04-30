@@ -4,85 +4,90 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Graph {
 
-	private Map<Node, List<Node>> nodes;
+    private Map<Integer, List<Edge>> nodes;
 
-	public Graph() {
-		this.nodes = new HashMap<>();
-	}
+    public Graph() {
+        this.nodes = new HashMap<>();
+    }
 
-	private void checkConnect(Node nodeA, Node nodeB) {
-		if (!this.nodes.containsKey(nodeA)) {
-			this.nodes.put(nodeA, new ArrayList<>());
-		}
-		if (!this.nodes.containsKey(nodeB)) {
-			this.nodes.put(nodeB, new ArrayList<>());
-		}
-		this.nodes.get(nodeA).add(nodeB);
-		this.nodes.get(nodeB).add(nodeA);
-	}
+    private void checkConnect(int nodeA, int nodeB, int weight) {
+        if (!this.nodes.containsKey(nodeA)) {
+            this.nodes.put(nodeA, new ArrayList<>());
+        }
+        if (!this.nodes.containsKey(nodeB)) {
+            this.nodes.put(nodeB, new ArrayList<>());
+        }
 
-	public void connect(String pair) {
-		var nodes = pair.split(" ");
-		var nodeA = new Node(nodes[0]);
-		var nodeB = new Node(nodes[1]);
-		checkConnect(nodeA, nodeB);
-	}
+        this.nodes.get(nodeA).add(new Edge(nodeA, nodeB, weight));
+        this.nodes.get(nodeB).add(new Edge(nodeB, nodeA, weight));
+    }
 
-	public void connectWeighted(String triple) {
-		var nodes = triple.split(" ");
-		var nodeA = new Node(nodes[0], nodes[2]);
-		var nodeB = new Node(nodes[1], nodes[2]);
-		checkConnect(nodeA, nodeB);
-	}
+    public void connect(String pair) {
+        var nodes = pair.split(" ");
+        var nodeA = Integer.parseInt(nodes[0]);
+        var nodeB = Integer.parseInt(nodes[1]);
 
-	public Map<Node, List<Node>> getNodesAsMap() {
-		return this.nodes;
-	}
+        checkConnect(nodeA, nodeB, 1);
+    }
 
-	public int[][] getNodesAsMatrix() {
-		int matrix[][] = new int[this.nodes.size() + 1][this.nodes.size() + 1];
-		for (var node : this.nodes.keySet()) {
-			for (var connection : this.nodes.get(node)) {
-				matrix[node.value][connection.value]++;
-			}
-		}
-		return matrix;
-	}
+    public void connectWeighted(String triple) {
+        var nodes = triple.split(" ");
+        var nodeA = Integer.parseInt(nodes[0]);
+        var nodeB = Integer.parseInt(nodes[1]);
+        var weight = Integer.parseInt(nodes[2]);
 
-	private class Node {
-		int weight;
-		int value;
+        checkConnect(nodeA, nodeB, weight);
+    }
 
-		Node(String value) {
-			this.value = Integer.parseInt(value);
-		}
+    public Map<Integer, List<Edge>> getGraphAsMap() {
+        return this.nodes;
+    }
 
-		Node(String value, String weight) {
-			this(value);
-			this.weight = Integer.parseInt(weight);
-		}
+    public int[][] getNodesAsMatrix() {
+        int matrix[][] = new int[this.nodes.size() + 1][this.nodes.size() + 1];
+        var edges = this.getAllEdges();
+        for (var edge : edges) {
+            matrix[edge.start][edge.end]++;
+        }
+        return matrix;
+    }
 
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + value;
-			return result;
-		}
+    public List<Edge> getAllEdges() {
+        return this.nodes.values().stream().flatMap(List::stream).collect(Collectors.toList());
+    }
 
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			Node other = (Node) obj;
-			return value == other.value;
-		}
-	}
+    private class Edge {
+        int weight;
+        int start, end;
+
+        Edge(int start, int end) {
+            this.start = start;
+            this.end = end;
+        }
+
+        Edge(int start, int end, int weight) {
+            this(start, end);
+            this.weight = weight;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(weight, start, end);
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Edge edge = (Edge) o;
+            return weight == edge.weight &&
+                    start == edge.start &&
+                    end == edge.end;
+        }
+    }
 }

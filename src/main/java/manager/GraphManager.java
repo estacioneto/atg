@@ -41,16 +41,11 @@ public class GraphManager implements GraphManagerInterface {
 	}
 
 	public int getVertexNumber(Graph graph) {
-		return graph.getNodesAsMap().size();
+		return graph.getGraphAsMap().size();
 	}
 
 	public int getEdgeNumber(Graph graph) {
-		var nodes = graph.getNodesAsMap();
-		var edges = 0;
-		for (var connection : nodes.keySet()) {
-			edges += nodes.get(connection).size();
-		}
-		return edges / 2;
+		return graph.getAllEdges().size() / 2;
 	}
 
 	public float getMeanEdge(Graph graph) {
