@@ -41,18 +41,20 @@ public class GraphManager implements GraphManagerInterface {
 	}
 
 	public int getVertexNumber(Graph graph) {
-		// TODO Auto-generated method stub
-		return 0;
+		return graph.getNodesAsMap().size();
 	}
 
 	public int getEdgeNumber(Graph graph) {
-		// TODO Auto-generated method stub
-		return 0;
+		var nodes = graph.getNodesAsMap();
+		var edges = 0;
+		for (var connection : nodes.keySet()) {
+			edges += nodes.get(connection).size();
+		}
+		return edges / 2;
 	}
 
 	public float getMeanEdge(Graph graph) {
-		// TODO Auto-generated method stub
-		return 0;
+		return (2 * this.getEdgeNumber(graph)) / this.getVertexNumber(graph);
 	}
 
 	public String graphRepresentation(Graph graph, String type) {
