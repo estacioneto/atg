@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -24,14 +23,15 @@ public class Graph {
 
 	private void checkConnect(int nodeA, int nodeB, int weight) {
 		if (!this.nodes.containsKey(nodeA)) {
-			this.nodes.put(nodeA, new HashSet<Edge>());
+			this.nodes.put(nodeA, new HashSet<>());
 		}
 		if (!this.nodes.containsKey(nodeB)) {
-			this.nodes.put(nodeB, new HashSet<Edge>());
+			this.nodes.put(nodeB, new HashSet<>());
 		}
 
-		this.nodes.get(nodeA).add(new Edge(nodeA, nodeB, weight));
-		this.nodes.get(nodeB).add(new Edge(nodeB, nodeA, weight));
+		var edge = new Edge(nodeA, nodeB, weight);
+		this.nodes.get(nodeA).add(edge);
+		this.nodes.get(nodeB).add(edge);
 	}
 
 	public void connect(String pair) {
@@ -72,10 +72,7 @@ public class Graph {
 
 	
 	public Set<Integer> getAllVertexes() {
-		return this.nodes.values().stream().flatMap(Set::stream)
-				.map(edge -> new HashSet<Integer>(Arrays.asList(edge.start, edge.end)))
-				.flatMap(Set::stream)
-				.collect(Collectors.toSet());
+		return this.nodes.keySet();
 	}
 
 	public static class Edge {

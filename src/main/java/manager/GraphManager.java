@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.Set;
 
+import algorithms.DeepSearch;
+import algorithms.Dijkstra;
 import javafx.util.Pair;
 import model.Graph;
 import model.Graph.Edge;
@@ -62,43 +64,11 @@ public class GraphManager implements GraphManagerInterface {
 	}
 
 	public String BFS(Graph graph, int init) {
-		var sb = new StringBuilder();
-		var visited = new HashSet<Integer>();
-		var queue = new LinkedList<Pair<Integer, Integer>>();
-		queue.addLast(new Pair<>(init, 1));
-		visited.add(init);
-		
-		final var template = "%s - %s %s" + System.lineSeparator();
-		sb.append(String.format(template, init, "-", 0));
-		while (!queue.isEmpty()) {
-			var next = queue.pollFirst();
-			for (Integer child : graph.getConnected(next.getKey())) {
-				if (visited.contains(child)) {
-					continue;
-				}
-				visited.add(child);
-				queue.add(new Pair<>(child, next.getValue() + 1));
-				sb.append(String.format(template, child, next.getKey(), next.getValue()));
-			}
-		}
-		
-		return sb.toString();
-	}
-
-	private String innerDFS(Graph graph, Integer node, Integer parent, int depth, Set<Integer> visited) {
-		var sb = new StringBuilder();
-		final var template = "%s - %s %s" + System.lineSeparator();
-		sb.append(String.format(template, node, parent == null ? "-" : parent, depth));
-		visited.add(node);
-		for (Integer child : graph.getConnected(node)) {
-			if (visited.contains(child)) { continue; }
-			sb.append(innerDFS(graph, child, node, depth + 1, visited));
-		}
-		return sb.toString();
+		return Dijkstra.BFS(graph, init);
 	}
 	
 	public String DFS(Graph graph, int init) {
-		return innerDFS(graph, init, null, 0, new HashSet<Integer>());
+		return DeepSearch.DFS(graph, init);
 	}
 
 	public String SCC(Graph graph) {
