@@ -6,7 +6,7 @@ import model.Graph;
 import java.util.HashSet;
 import java.util.LinkedList;
 
-public class Dijkstra {
+public class BreadthSearch {
     public static String BFS(Graph graph, int init) {
         var sb = new StringBuilder();
         var visited = new HashSet<Integer>();

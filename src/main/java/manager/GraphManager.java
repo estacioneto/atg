@@ -2,16 +2,11 @@ package manager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Scanner;
-import java.util.Set;
 
 import algorithms.DeepSearch;
-import algorithms.Dijkstra;
-import javafx.util.Pair;
+import algorithms.BreadthSearch;
 import model.Graph;
-import model.Graph.Edge;
 
 public class GraphManager implements GraphManagerInterface {
 
@@ -64,7 +59,7 @@ public class GraphManager implements GraphManagerInterface {
 	}
 
 	public String BFS(Graph graph, int init) {
-		return Dijkstra.BFS(graph, init);
+		return BreadthSearch.BFS(graph, init);
 	}
 	
 	public String DFS(Graph graph, int init) {
