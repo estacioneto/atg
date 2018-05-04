@@ -21,7 +21,7 @@ public class Graph {
 				.collect(Collectors.toSet());
 	}
 
-	private void checkConnect(int nodeA, int nodeB, int weight) {
+	private void checkConnect(int nodeA, int nodeB, Double weight) {
 		if (!this.nodes.containsKey(nodeA)) {
 			this.nodes.put(nodeA, new HashSet<>());
 		}
@@ -39,14 +39,14 @@ public class Graph {
 		var nodeA = Integer.parseInt(nodes[0]);
 		var nodeB = Integer.parseInt(nodes[1]);
 
-		checkConnect(nodeA, nodeB, 1);
+		checkConnect(nodeA, nodeB, 1.0);
 	}
 
 	public void connectWeighted(String triple) {
 		var nodes = triple.split(" ");
 		var nodeA = Integer.parseInt(nodes[0]);
 		var nodeB = Integer.parseInt(nodes[1]);
-		var weight = Integer.parseInt(nodes[2]);
+		var weight = Double.parseDouble(nodes[2]);
 
 		checkConnect(nodeA, nodeB, weight);
 	}
@@ -64,6 +64,10 @@ public class Graph {
 		return matrix;
 	}
 
+	public Set<Edge> getAllEdgesFromVertix(Integer v) {
+		return this.nodes.get(v);
+	}
+
 	public Set<Edge> getAllEdges() {
 		return this.nodes.values().stream()
 				.flatMap(Set::stream)
@@ -76,7 +80,19 @@ public class Graph {
 	}
 
 	public static class Edge {
-		private int weight;
+		public Double getWeight() {
+			return weight;
+		}
+
+		public int getStart() {
+			return start;
+		}
+
+		public int getEnd() {
+			return end;
+		}
+
+		private Double weight;
 		private int start, end;
 
 		Edge(int start, int end) {
@@ -89,10 +105,12 @@ public class Graph {
 			this.end = end;
 		}
 
-		Edge(int start, int end, int weight) {
+		Edge(int start, int end, Double weight) {
 			this(start, end);
 			this.weight = weight;
 		}
+
+
 		
 		@Override
 		public int hashCode() {

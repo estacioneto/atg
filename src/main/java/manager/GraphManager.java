@@ -4,11 +4,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import algorithms.BellmanFord;
 import algorithms.DeepSearch;
 import algorithms.BreadthSearch;
 import model.Graph;
 
 public class GraphManager implements GraphManagerInterface {
+
+	private Graph mGraph = null;
 
 	private Scanner getScanner(String path) {
 		File file = new File(path);
@@ -26,8 +29,11 @@ public class GraphManager implements GraphManagerInterface {
 		Graph graph = new Graph();
 		while (sc.hasNext()) {
 			String line = sc.nextLine();
+			System.out.println(line);
 			graph.connect(line);
 		}
+
+		this.mGraph = graph;
 		return graph;
 	}
 
@@ -39,6 +45,8 @@ public class GraphManager implements GraphManagerInterface {
 			String line = sc.nextLine();
 			graph.connectWeighted(line);
 		}
+
+		this.mGraph = graph;
 		return graph;
 	}
 
@@ -71,10 +79,7 @@ public class GraphManager implements GraphManagerInterface {
 		return null;
 	}
 
-	public String shortestPath(int v1, int v2) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public String shortestPath(int v1, int v2) { return BellmanFord.BF(this.mGraph, v1, v2); }
 
 	public String mst(Graph graph) {
 		// TODO Auto-generated method stub
