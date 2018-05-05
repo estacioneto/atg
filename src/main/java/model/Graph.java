@@ -79,8 +79,9 @@ public class Graph {
 		return this.nodes.keySet();
 	}
 
-	public static class Edge {
-		public Double getWeight() {
+	public static class Edge implements Comparable<Edge> {
+
+		public double getWeight() {
 			return weight;
 		}
 
@@ -92,7 +93,7 @@ public class Graph {
 			return end;
 		}
 
-		private Double weight;
+		private double weight;
 		private int start, end;
 
 		Edge(int start, int end) {
@@ -109,8 +110,6 @@ public class Graph {
 			this(start, end);
 			this.weight = weight;
 		}
-
-
 		
 		@Override
 		public int hashCode() {
@@ -125,6 +124,11 @@ public class Graph {
 			return weight == edge.weight && 
 				start == edge.start &&
 				end == edge.end;
+		}
+
+		@Override
+		public int compareTo(Edge edge) {
+			return Double.compare(this.weight, edge.getWeight());
 		}
 	}
 }

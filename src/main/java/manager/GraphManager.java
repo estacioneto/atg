@@ -4,7 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import algorithms.BellmanFord;
+import algorithms.MinimumSpanningTree;
+import algorithms.ShortestPath;
 import algorithms.DeepSearch;
 import algorithms.BreadthSearch;
 import model.Graph;
@@ -79,11 +80,12 @@ public class GraphManager implements GraphManagerInterface {
 		return null;
 	}
 
-	public String shortestPath(int v1, int v2) { return BellmanFord.BF(this.mGraph, v1, v2); }
+	public String shortestPath(int v1, int v2) {
+		return ShortestPath.BellmanFord(this.mGraph, v1, v2);
+	}
 
 	public String mst(Graph graph) {
-		// TODO Auto-generated method stub
-		return null;
+		return MinimumSpanningTree.Kruskal(graph);
 	}
 
 }

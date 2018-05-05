@@ -4,11 +4,11 @@ import model.Graph;
 
 import java.util.HashMap;
 
-public class BellmanFord {
+public class ShortestPath {
 
     static final int ZERO = 0;
 
-    public static String BF(Graph graph, int v1, int v2) {
+    public static String BellmanFord(Graph graph, int v1, int v2) {
 
         HashMap<Integer, Double> distances = new HashMap<>();
 

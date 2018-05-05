@@ -19,7 +19,10 @@ public class GraphManagerTest {
 		System.out.println(">> DFS");
 		System.out.println(manager.DFS(graph, 1));
 
-		System.out.println(manager.shortestPath(1, 5));
+		System.out.println(">> Shortest Path");
+		System.out.println(manager.shortestPath(1, 5) + System.lineSeparator());
 
+		System.out.println(">> MST");
+		System.out.println(manager.mst(graph2));
 	}
 }
