@@ -11,12 +11,12 @@ public class MinimumSpanningTree {
         var sb = new StringBuilder();
         final var template = "%s - %s | %s" + System.lineSeparator();
 
-        int numberOfVertexes = graph.getAllVertexes().size();
-        int[] parents = initializeParents(numberOfVertexes + 1);
+        int size = graph.getAllVertexes().size();
+        int[] parents = initializeParents(size + 1);
 
         Graph.Edge[] sortedEdges = getEdgesSorted(graph.getAllEdges());
 
-        int maximumNumberOfEdges = numberOfVertexes - 1;
+        int maximumNumberOfEdges = size - 1;
 
         int edgeIndex = 0;
         int edgeNumber = 0;

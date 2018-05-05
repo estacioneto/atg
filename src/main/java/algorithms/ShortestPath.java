@@ -23,7 +23,7 @@ public class ShortestPath {
             if (currentWeight == Double.POSITIVE_INFINITY) continue;
 
 
-            for (Graph.Edge edge : graph.getAllEdgesFromVertix(current)) {
+            for (Graph.Edge edge : graph.getAllEdgesFromVertex(current)) {
                 int connected = edge.getStart() != current ? edge.getStart() : edge.getEnd();
                 if (connected == v1) continue;
 

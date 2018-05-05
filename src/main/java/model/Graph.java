@@ -64,7 +64,7 @@ public class Graph {
 		return matrix;
 	}
 
-	public Set<Edge> getAllEdgesFromVertix(Integer v) {
+	public Set<Edge> getAllEdgesFromVertex(Integer v) {
 		return this.nodes.get(v);
 	}
 
