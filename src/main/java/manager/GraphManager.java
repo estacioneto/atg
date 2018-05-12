@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import algorithms.MinimumSpanningTree;
 import algorithms.ShortestPath;
+import algorithms.StrongConnectedComponent;
 import algorithms.DeepSearch;
 import algorithms.BreadthSearch;
 import model.Graph;
@@ -30,7 +31,6 @@ public class GraphManager implements GraphManagerInterface {
 		Graph graph = new Graph();
 		while (sc.hasNext()) {
 			String line = sc.nextLine();
-			System.out.println(line);
 			graph.connect(line);
 		}
 
@@ -76,8 +76,7 @@ public class GraphManager implements GraphManagerInterface {
 	}
 
 	public String SCC(Graph graph) {
-		// TODO Auto-generated method stub
-		return null;
+		return StrongConnectedComponent.SCC(graph);
 	}
 
 	public String shortestPath(int v1, int v2) {
