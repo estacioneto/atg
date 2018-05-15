@@ -76,17 +76,14 @@ public interface GraphManagerInterface {
 
     /**
      * According to the specification:
-     *
-     * "Componentes fortemente conectados. A biblioteca deve ser capaz
-     * descobrir os componentes fortemente conexos de um grafo. Saída: cada linha contém
-     * a lista de vértices pertencentes a um componente. Os componentes devem estar
-     * listados em ordem decrescente de tamanho (listar primeiro o componente com o
-     * maior número de vértices, etc)."
-     *
-     * @param graph Graph to be analysed
-     * @return The SCC representation.
+     * 
+     * "A biblioteca deve ser capaz de verificar se o grafo
+	 * fornecido é ou não conexo."
+	 * 
+	 * @param graph Graph to be analysed
+	 * @return boolean True if the graph is connected.
      */
-    String SCC(Graph graph);
+    boolean connected(Graph graph);
 
     /**
      * According to the specification:
