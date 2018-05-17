@@ -4,11 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import algorithms.BreadthSearch;
+import algorithms.Connected;
+import algorithms.DeepSearch;
 import algorithms.MinimumSpanningTree;
 import algorithms.ShortestPath;
-import algorithms.StrongConnectedComponent;
-import algorithms.DeepSearch;
-import algorithms.BreadthSearch;
 import model.Graph;
 
 public class GraphManager implements GraphManagerInterface {
@@ -75,8 +75,8 @@ public class GraphManager implements GraphManagerInterface {
 		return DeepSearch.DFS(graph, init);
 	}
 
-	public String SCC(Graph graph) {
-		return StrongConnectedComponent.SCC(graph);
+	public boolean connected(Graph graph) {
+		return Connected.connected(graph);
 	}
 
 	public String shortestPath(int v1, int v2) {

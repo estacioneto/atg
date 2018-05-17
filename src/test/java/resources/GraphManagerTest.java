@@ -24,5 +24,7 @@ public class GraphManagerTest {
 
 		System.out.println(">> MST");
 		System.out.println(manager.mst(graph2));
+		
+		System.out.println(manager.connected(graph));
 	}
 }
