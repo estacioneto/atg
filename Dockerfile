@@ -8,10 +8,10 @@ RUN  \
   sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
   apt-get update && \
   apt-get -y upgrade && \
-  apt-get install -y openjfx vim wget curl git maven
+  apt-get install -y vim wget curl maven
 
 COPY . /usr/src/atg
 
 WORKDIR /usr/src/atg
 
-RUN mvn test
+RUN mvn package

@@ -42,10 +42,14 @@ public class ShortestPath {
         }
 
         List<String> arr = new ArrayList<>();
-        var temp = parents.get(v2);
+        Integer temp = v2;
         do {
         	arr.add(temp.toString());
+            temp = parents.get(temp);
         } while(!temp.equals(parents.get(temp)));
+        
+        arr.add(temp.toString());
+
         Collections.reverse(arr);
         return String.join(" ", arr);
     }
