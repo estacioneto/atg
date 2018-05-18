@@ -1,13 +1,14 @@
 package resources;
 
 import manager.GraphManager;
+import model.Graph;
 
 public class GraphManagerTest {
 	
 	public static void main(String[] args) {
-		var manager = new GraphManager();
-		var graph = manager.readGraph("src/test/java/resources/case1.txt");
-		var graph2 = manager.readWeightedGraph("src/test/java/resources/case2.txt");
+		GraphManager manager = new GraphManager();
+		Graph graph = manager.readGraph("src/test/java/resources/case1.txt");
+		Graph graph2 = manager.readWeightedGraph("src/test/java/resources/case2.txt");
 
 		System.out.println(">> Should have 5 vertexes: " + manager.getVertexNumber(graph));
 		// existem 2 vertices iguais, apenas invertidos
