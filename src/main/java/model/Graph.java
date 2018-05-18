@@ -1,7 +1,9 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -11,10 +13,27 @@ public class Graph {
 
 	private Map<Integer, Set<Edge>> nodes;
 
-	public Graph() {
+	private Boolean weighted;
+
+	public Graph() { 
 		this.nodes = new HashMap<>();
+		this.weighted = false;
+	}
+
+	/**
+	 * Construtor com parâmetro `weighted`
+	 * 
+	 * @param {Boolean} weighted - Indica se o grafo tem pesos nas arestas
+	 */
+	public Graph(Boolean weighted) { 
+		this.nodes = new HashMap<>();
+		this.weighted = weighted;
 	}
 	
+	public Boolean isWeighted(){
+		return weighted;
+	}
+
 	public Set<Integer> getConnected(Integer node) {
 		return nodes.get(node).stream()
 				.map(edge -> node == edge.start ? edge.end : edge.start)
@@ -55,11 +74,29 @@ public class Graph {
 		return this.nodes;
 	}
 
-	public int[][] getNodesAsMatrix() {
-		int matrix[][] = new int[this.nodes.size() + 1][this.nodes.size() + 1];
+	public List<Integer> getOrderedNodes(){
+		return new ArrayList<Integer>(this.nodes.keySet());
+	}
+
+	/**
+	 * Gera matrix de adjacência dos vértices, adicionando os pesos das arestas, caso existam.
+	 * 
+	 * Caso o peso seja 1.0 (utilizado como padrão para grafos sem pesos), é adicionado apenas 1
+	 * na matriz
+	 * 
+	 * @return {double[][]} matriz de adjacência
+	 */
+	public double[][] getNodesAsMatrix() {
+		double matrix[][] = new double[this.nodes.size() + 1][this.nodes.size() + 1];
 		var edges = this.getAllEdges();
 		for (var edge : edges) {
-			matrix[edge.start][edge.end]++;
+			if (edge.weight != 1.0){
+				matrix[edge.start][edge.end] = edge.weight;
+				matrix[edge.end][edge.start] = edge.weight;
+			}else {
+				matrix[edge.start][edge.end]++;
+				matrix[edge.end][edge.start]++;
+			}
 		}
 		return matrix;
 	}

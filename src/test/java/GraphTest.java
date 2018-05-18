@@ -11,7 +11,7 @@ class GraphTest {
 
     GraphManager manager = new GraphManager();
     Graph normalGraph = manager.readGraph("src/test/java/resources/case1.txt");
-    Graph weightedGraph = manager.readGraph("src/test/java/resources/case2.txt");
+    Graph weightedGraph = manager.readWeightedGraph("src/test/java/resources/case2.txt");
     Graph normalGraph2 = manager.readGraph("src/test/java/resources/case3.txt");
 
     @Test
@@ -77,8 +77,21 @@ class GraphTest {
     @Test
     void testMst(){
         assertEquals(manager.mst(normalGraph), "1 - 2 | 1\n2 - 3 | 2\n1 - 4 | 3\n2 - 5 | 4\n");
-        assertEquals(manager.mst(weightedGraph), "1 - 2 | 1\n3 - 4 | 2\n4 - 5 | 3\n2 - 5 | 4\n");
+        assertEquals(manager.mst(weightedGraph), "3 - 4 | 1\n1 - 2 | 2\n2 - 5 | 3\n4 - 5 | 4\n");
         assertEquals(manager.mst(normalGraph2), "1 - 2 | 1\n4 - 5 | 2\n3 - 5 | 3\n2 - 5 | 4\n");
     }
 
+    @Test
+    void testGraphRepresentationAM(){
+        assertEquals(manager.graphRepresentation(normalGraph, "AM"), "  1 2 3 4 5 \n1 0 1 0 1 0 \n2 1 0 1 0 1 \n3 0 1 0 0 0 \n4 1 0 0 0 0 \n5 0 1 0 0 0 \n");
+        assertEquals(manager.graphRepresentation(weightedGraph, "AM"), "  1 2 3 4 5 \n1 0 0.1 0 0 1 \n2 0.1 0 0 0 0.2 \n3 0 0 0 -9.5 5 \n4 0 0 -9.5 0 2.3 \n5 1 0.2 5 2.3 0 \n");
+        assertEquals(manager.graphRepresentation(normalGraph2, "AM"), "  1 2 3 4 5 \n1 0 1 0 0 1 \n2 1 0 0 0 1 \n3 0 0 0 0 1 \n4 0 0 0 0 1 \n5 1 1 1 1 0 \n");
+    }
+
+    @Test
+    void testGraphRepresentationAL(){
+        assertEquals(manager.graphRepresentation(normalGraph, "AL"), "1 - 2 4 \n2 - 1 3 5 \n3 - 2 \n4 - 1 \n5 - 2 \n");
+        assertEquals(manager.graphRepresentation(weightedGraph, "AL"), "1 - 2(0.1) 5(1) \n2 - 1(0.1) 5(0.2) \n3 - 4(-9.5) 5(5) \n4 - 3(-9.5) 5(2.3) \n5 - 1(1) 2(0.2) 3(5) 4(2.3) \n");
+        assertEquals(manager.graphRepresentation(normalGraph2, "AL"), "1 - 2 5 \n2 - 1 5 \n3 - 5 \n4 - 5 \n5 - 1 2 3 4 \n");
+    }
 }

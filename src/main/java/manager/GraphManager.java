@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import algorithms.BreadthSearch;
+import algorithms.GraphRepresentation;
 import algorithms.Connected;
 import algorithms.DeepSearch;
 import algorithms.MinimumSpanningTree;
@@ -28,7 +29,7 @@ public class GraphManager implements GraphManagerInterface {
 	public Graph readGraph(String path) {
 		Scanner sc = getScanner(path);
 		String edges = sc.nextLine();
-		Graph graph = new Graph();
+		Graph graph = new Graph(false);
 		while (sc.hasNext()) {
 			String line = sc.nextLine();
 			graph.connect(line);
@@ -41,7 +42,7 @@ public class GraphManager implements GraphManagerInterface {
 	public Graph readWeightedGraph(String path) {
 		Scanner sc = getScanner(path);
 		String edges = sc.nextLine();
-		Graph graph = new Graph();
+		Graph graph = new Graph(true);
 		while (sc.hasNext()) {
 			String line = sc.nextLine();
 			graph.connectWeighted(line);
@@ -63,8 +64,14 @@ public class GraphManager implements GraphManagerInterface {
 	}
 
 	public String graphRepresentation(Graph graph, String type) {
-		// TODO Auto-generated method stub
-		return null;
+		switch (type){
+			case "AL":
+				return GraphRepresentation.graphRepresentationAL(graph);
+			case "AM":
+				return GraphRepresentation.graphRepresentationAM(graph);
+			default:
+				return null;
+		}
 	}
 
 	public String BFS(Graph graph, int init) {
