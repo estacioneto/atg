@@ -69,9 +69,9 @@ class GraphTest {
 
     @Test
     void testShortestPath(){
-        assertEquals(manager.shortestPath(2,1), "1.0");
-        assertEquals(manager.shortestPath(3,1), "2.0");
-        assertEquals(manager.shortestPath(2, 1), "1.0");
+        assertEquals(manager.shortestPath(weightedGraph, 2,1), "1.0");
+        assertEquals(manager.shortestPath(weightedGraph, 3,1), "2.0");
+        assertEquals(manager.shortestPath(weightedGraph, 2, 1), "1.0");
     }
 
     @Test

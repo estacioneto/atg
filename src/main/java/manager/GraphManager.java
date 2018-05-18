@@ -14,8 +14,6 @@ import model.Graph;
 
 public class GraphManager implements GraphManagerInterface {
 
-	private Graph mGraph = null;
-
 	private Scanner getScanner(String path) {
 		File file = new File(path);
 		try {
@@ -35,7 +33,6 @@ public class GraphManager implements GraphManagerInterface {
 			graph.connect(line);
 		}
 
-		this.mGraph = graph;
 		return graph;
 	}
 
@@ -48,7 +45,6 @@ public class GraphManager implements GraphManagerInterface {
 			graph.connectWeighted(line);
 		}
 
-		this.mGraph = graph;
 		return graph;
 	}
 
@@ -86,8 +82,8 @@ public class GraphManager implements GraphManagerInterface {
 		return Connected.connected(graph);
 	}
 
-	public String shortestPath(int v1, int v2) {
-		return ShortestPath.BellmanFord(this.mGraph, v1, v2);
+	public String shortestPath(Graph graph, int v1, int v2) {
+		return ShortestPath.BellmanFord(graph, v1, v2);
 	}
 
 	public String mst(Graph graph) {

@@ -1,8 +1,11 @@
 package algorithms;
 
-import model.Graph;
-
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+
+import model.Graph;
 
 public class ShortestPath {
 
@@ -11,10 +14,12 @@ public class ShortestPath {
     public static String BellmanFord(Graph graph, int v1, int v2) {
 
         HashMap<Integer, Double> distances = new HashMap<>();
+        HashMap<Integer, Integer> parents = new HashMap<>();
 
         for (Integer vertex : graph.getAllVertexes()) {
             Double value = vertex == v1 ? ZERO : Double.POSITIVE_INFINITY;
             distances.put(vertex, value);
+            parents.put(vertex, vertex);
         }
 
         for (Integer current : graph.getAllVertexes()) {
@@ -28,13 +33,20 @@ public class ShortestPath {
                 if (connected == v1) continue;
 
                 Double weight = edge.getWeight();
-
-                Double value = Math.min(distances.get(connected), currentWeight + weight);
-                distances.put(connected, value);
+                Double newDistance = currentWeight + weight;
+                if (distances.get(connected) > newDistance) {
+                    distances.put(connected, newDistance);
+                    parents.put(connected, current);
+                }
             }
         }
 
-        // TODO: retornar o caminho, e nao o custo
-        return distances.get(v2).toString();
+        List<String> arr = new ArrayList<>();
+        var temp = parents.get(v2);
+        do {
+        	arr.add(temp.toString());
+        } while(!temp.equals(parents.get(temp)));
+        Collections.reverse(arr);
+        return String.join(" ", arr);
     }
 }

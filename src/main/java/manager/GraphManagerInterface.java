@@ -91,11 +91,12 @@ public interface GraphManagerInterface {
      * "Caminho mínimo. A biblioteca deve ser capaz de
      * encontrar o caminho mais curto entre dois vértices."
      *
+     * @param graph Graph to be analyzed
      * @param v1 Start vertex
      * @param v2 End vertex
      * @return Shortest path representation.
      */
-    String shortestPath(int v1, int v2);
+    String shortestPath(Graph graph, int v1, int v2);
 
     /**
      * According to the specification:
