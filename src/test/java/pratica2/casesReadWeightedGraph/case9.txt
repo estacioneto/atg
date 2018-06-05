@@ -1,0 +1,4 @@
+3
+AB CD AB
+AB EF BC
+EF GH CD

@@ -30,17 +30,17 @@ class ReadGraphTest {
 	
 	@Test
 	void readGraphTest2() {
-//		assertThrows(Exception.class , manager.readGraph("src/test/java/pratica2/casesReadGraph/case2.txt"));
+		assertThrows(Exception.class , manager.readGraph("src/test/java/pratica2/casesReadGraph/case2.txt"));
 	}
 	
 	@Test
 	void readGraphTest3() {
-//		assertThrows(Exception.class , manager.readGraph("src/test/java/pratica2/casesReadGraph/case3.txt"));
+		assertThrows(Exception.class , manager.readGraph("src/test/java/pratica2/casesReadGraph/case3.txt"));
 	}
 	
 	@Test
 	void readGraphTest4() {
-//		assertThrows(Exception.class , manager.readGraph("src/test/java/pratica2/casesReadGraph/case4.txt"));
+		assertThrows(Exception.class , manager.readGraph("src/test/java/pratica2/casesReadGraph/case4.txt"));
 	}
 	
 	@Test
@@ -64,6 +64,22 @@ class ReadGraphTest {
 		assertFalse(testVertexType("src/test/java/pratica2/casesReadGraph/case8.txt"));
 	}
 	
+	@Test
+	void readGraphTest9() {
+		assertFalse(testVertexType("src/test/java/pratica2/casesReadGraph/case9.txt"));
+	}
+	
+	@Test
+	void readGraphTest10() {
+		assertFalse(testVertexType("src/test/java/pratica2/casesReadGraph/case10.txt"));
+	}
+	
+	@Test
+	void readGraphTest11() {
+		assertFalse(testVertexType("src/test/java/pratica2/casesReadGraph/case11.txt"));
+	}
+	
+
 	
 	private boolean testVertexType(String path){
 		try {
