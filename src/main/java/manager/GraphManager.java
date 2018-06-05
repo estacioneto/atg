@@ -25,12 +25,18 @@ public class GraphManager implements GraphManagerInterface {
 	}
 	
 	public Graph readGraph(String path) {
-		Scanner sc = getScanner(path);
-		String edges = sc.nextLine();
-		Graph graph = new Graph(false);
-		while (sc.hasNext()) {
-			String line = sc.nextLine();
-			graph.connect(line);
+		Graph graph = null;
+		try {
+			
+			Scanner sc = getScanner(path);
+			String edges = sc.nextLine();
+			graph = new Graph(false);
+			while (sc.hasNext()) {
+				String line = sc.nextLine();
+				graph.connect(line);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 
 		return graph;
