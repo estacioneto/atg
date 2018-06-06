@@ -78,17 +78,17 @@ public class ReadWeightedGraphTest {
 	
 	@Test
 	public void readWeightedGraphTest12() {
-		assertTrue(testVertexType("src/test/java/pratica2/casesReadWeightedGraph/case12.txt"));
+		assertEquals("Exception", testWeightedGraphException("src/test/java/pratica2/casesReadWeightedGraph/case12.txt"));
 	}
 	
 	@Test
 	public void readWeightedGraphTest13() {
-		assertTrue(testVertexType("src/test/java/pratica2/casesReadWeightedGraph/case13.txt"));
+		assertEquals("Exception", testWeightedGraphException("src/test/java/pratica2/casesReadWeightedGraph/case13.txt"));
 	}
 	
 	@Test
 	public void readWeightedGraphTest14() {
-		assertTrue(testVertexType("src/test/java/pratica2/casesReadWeightedGraph/case14.txt"));
+		assertEquals("Exception", testWeightedGraphException("src/test/java/pratica2/casesReadWeightedGraph/case14.txt"));
 	}
 	
 	private boolean testVertexType(String path){

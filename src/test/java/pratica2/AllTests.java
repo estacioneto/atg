@@ -9,7 +9,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	ReadGraphTest.class,
 	ReadWeightedGraphTest.class,
 	GraphRepresentationTest.class,
-	MeanEdgeTest.class
+	OtherTest.class,
+	SearchTest.class,
 })
 public class AllTests {
 

@@ -1,13 +1,13 @@
 package pratica2;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import org.junit.Test;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import manager.GraphManager;
 import model.Graph;
@@ -16,23 +16,37 @@ public class GraphRepresentationTest {
 
 	
 	GraphManager manager = new GraphManager();
-	Graph graph1 = manager.readGraph("src/test/java/pratica2/casesGraphRepresentationTest/grafo1.txt");
+	Graph grafoSemPeso = manager.readGraph("src/test/java/pratica2/casesGraphRepresentationTest/grafoSemPeso.txt");
+	Graph grafoComPeso = manager.readWeightedGraph("src/test/java/pratica2/casesGraphRepresentationTest/grafoComPeso.txt");
+	
 	
 	@Test
 	public void graphRepresentationTest1() {
-		String saida = readSaida("src/test/java/pratica2/casesGraphRepresentationTest/saidaAMGrafo1.txt");
-		assertEquals(saida.trim(), manager.graphRepresentation(graph1, "AM").trim());
+		String saida = readSaida("src/test/java/pratica2/casesGraphRepresentationTest/saidaAMGrafoSemPeso.txt");
+		assertEquals(saida.trim(), manager.graphRepresentation(grafoSemPeso, "AM").trim());
+	}
+	
+	@Test
+	public void graphRepresentationTest1ComPeso() {
+		String saida = readSaida("src/test/java/pratica2/casesGraphRepresentationTest/saidaAMGrafoComPeso.txt");
+		assertEquals(saida.trim(), manager.graphRepresentation(grafoComPeso, "AM").trim());
 	}
 
 	@Test
 	public void graphRepresentationTest2() {
-		String saida = readSaida("src/test/java/pratica2/casesGraphRepresentationTest/saidaALGrafo1.txt");
-		assertEquals(saida, manager.graphRepresentation(graph1, "AL"));
+		String saida = readSaida("src/test/java/pratica2/casesGraphRepresentationTest/saidaALGrafoSemPeso.txt");
+		assertEquals(saida, manager.graphRepresentation(grafoSemPeso, "AL"));
+	}
+	
+	@Test
+	public void graphRepresentationTest2ComPeso() {
+		String saida = readSaida("src/test/java/pratica2/casesGraphRepresentationTest/saidaALGrafoComPeso.txt");
+		assertEquals(saida.trim(), manager.graphRepresentation(grafoComPeso, "AL").trim());
 	}
 	
 	@Test
 	public void graphRepresentationTest3() {
-		assertNull(manager.graphRepresentation(graph1, ""));
+		assertNull(manager.graphRepresentation(grafoSemPeso, ""));
 	}
 	
 	@Test

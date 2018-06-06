@@ -64,7 +64,7 @@ public class ReadGraphTest {
 	
 	@Test
 	public void readGraphTest9() {
-		assertTrue(testVertexType("src/test/java/pratica2/casesReadGraph/case9.txt"));
+		assertEquals("Exception", testGraphException("src/test/java/pratica2/casesReadGraph/case9.txt"));
 	}
 	
 	@Test
@@ -74,10 +74,16 @@ public class ReadGraphTest {
 	
 	@Test
 	public void readGraphTest11() {
-		assertTrue(testVertexType("src/test/java/pratica2/casesReadGraph/case11.txt"));
+		assertEquals("Exception", testGraphException("src/test/java/pratica2/casesReadGraph/case11.txt"));
 	}
 	
-
+	
+	@Test
+	public void readGraphTest12() {
+		assertFalse(testVertexType("src/test/java/pratica2/casesReadGraph/case12.txt"));
+	}
+	
+	
 	
 	private boolean testVertexType(String path){
 		try {
