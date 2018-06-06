@@ -6,9 +6,10 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ 
-//	ReadGraphTest.class,
-//	ReadWeightedGraphTest.class,
-	GraphRepresentationTest.class
+	ReadGraphTest.class,
+	ReadWeightedGraphTest.class,
+	GraphRepresentationTest.class,
+	MeanEdgeTest.class
 })
 public class AllTests {
 
