@@ -6,8 +6,9 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ 
-	ReadGraphTest.class,
-	ReadWeightedGraphTest.class
+//	ReadGraphTest.class,
+//	ReadWeightedGraphTest.class,
+	GraphRepresentationTest.class
 })
 public class AllTests {
 

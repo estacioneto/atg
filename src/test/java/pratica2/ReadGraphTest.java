@@ -1,21 +1,19 @@
 package pratica2;
 
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import manager.GraphManager;
 import model.Graph;
 
-class ReadGraphTest {
+public class ReadGraphTest {
 
 	GraphManager manager = new GraphManager();
 	
 	@Test
-	void readGraphTest1() {
+	public void readGraphTest1() {
 		Graph graphExpected = new Graph(false);
 		graphExpected.connect("1 2");
 		graphExpected.connect("3 2");
@@ -29,54 +27,54 @@ class ReadGraphTest {
 	}
 	
 	@Test
-	void readGraphTest2() {
-		assertThrows(Exception.class , manager.readGraph("src/test/java/pratica2/casesReadGraph/case2.txt"));
+	public void readGraphTest2() {
+		assertEquals("Exception", testGraphException("src/test/java/pratica2/casesReadGraph/case4.txt"));
 	}
 	
 	@Test
-	void readGraphTest3() {
-		assertThrows(Exception.class , manager.readGraph("src/test/java/pratica2/casesReadGraph/case3.txt"));
+	public void readGraphTest3() {
+		assertEquals("Exception", testGraphException("src/test/java/pratica2/casesReadGraph/case3.txt"));
+	}		
+	
+	@Test
+	public void readGraphTest4() {
+		assertEquals("Exception", testGraphException("src/test/java/pratica2/casesReadGraph/case4.txt"));
 	}
 	
 	@Test
-	void readGraphTest4() {
-		assertThrows(Exception.class , manager.readGraph("src/test/java/pratica2/casesReadGraph/case4.txt"));
+	public void readGraphTest5() {
+		assertTrue(testVertexType("src/test/java/pratica2/casesReadGraph/case5.txt"));
 	}
 	
 	@Test
-	void readGraphTest5() {
-		assertFalse(testVertexType("src/test/java/pratica2/casesReadGraph/case5.txt"));
-	}
-	
-	@Test
-	void readGraphTest6() {
-		assertFalse(testVertexType("src/test/java/pratica2/casesReadGraph/case6.txt"));
+	public void readGraphTest6() {
+		assertTrue(testVertexType("src/test/java/pratica2/casesReadGraph/case6.txt"));
 	}
 
 	@Test
-	void readGraphTest7() {
-		assertFalse(testVertexType("src/test/java/pratica2/casesReadGraph/case7.txt"));
+	public void readGraphTest7() {
+		assertTrue(testVertexType("src/test/java/pratica2/casesReadGraph/case7.txt"));
 	}
 	
 	
 	@Test
-	void readGraphTest8() {
-		assertFalse(testVertexType("src/test/java/pratica2/casesReadGraph/case8.txt"));
+	public void readGraphTest8() {
+		assertTrue(testVertexType("src/test/java/pratica2/casesReadGraph/case8.txt"));
 	}
 	
 	@Test
-	void readGraphTest9() {
-		assertFalse(testVertexType("src/test/java/pratica2/casesReadGraph/case9.txt"));
+	public void readGraphTest9() {
+		assertTrue(testVertexType("src/test/java/pratica2/casesReadGraph/case9.txt"));
 	}
 	
 	@Test
-	void readGraphTest10() {
-		assertFalse(testVertexType("src/test/java/pratica2/casesReadGraph/case10.txt"));
+	public void readGraphTest10() {
+		assertTrue(testVertexType("src/test/java/pratica2/casesReadGraph/case10.txt"));
 	}
 	
 	@Test
-	void readGraphTest11() {
-		assertFalse(testVertexType("src/test/java/pratica2/casesReadGraph/case11.txt"));
+	public void readGraphTest11() {
+		assertTrue(testVertexType("src/test/java/pratica2/casesReadGraph/case11.txt"));
 	}
 	
 
@@ -88,5 +86,15 @@ class ReadGraphTest {
 			return false;
 		}
 		return true;
+	}
+	
+	private String testGraphException(String path) {
+		try {
+			manager.readGraph(path);
+		} catch (Exception e) {
+			return "Exception";
+		}
+		
+		return "";
 	}
 }

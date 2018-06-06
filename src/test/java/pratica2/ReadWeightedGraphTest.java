@@ -2,17 +2,17 @@ package pratica2;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import manager.GraphManager;
 import model.Graph;
 
-class ReadWeightedGraphTest {
+public class ReadWeightedGraphTest {
 
 	GraphManager manager = new GraphManager();
 	
 	@Test
-	void readGraphTest1() {
+	public void readGraphTest1() {
 		Graph graphExpected = new Graph(true);
 		graphExpected.connectWeighted("1 2 4");
 		graphExpected.connectWeighted("3 2 6");
@@ -26,69 +26,69 @@ class ReadWeightedGraphTest {
 	}
 	
 	@Test
-	void readWeightedGraphTest2() {
-		assertThrows(Exception.class , manager.readWeightedGraph("src/test/java/pratica2/casesReadWeightedGraph/case2.txt"));
+	public void readWeightedGraphTest2() {
+		assertEquals("Exception", testWeightedGraphException("src/test/java/pratica2/casesReadWeightedGraph/case2.txt"));
 	}
 	
 	@Test
-	void readWeightedGraphTest3() {
-		assertThrows(Exception.class , manager.readWeightedGraph("src/test/java/pratica2/casesReadWeightedGraph/case3.txt"));
+	public void readWeightedGraphTest3() {
+		assertEquals("Exception", testWeightedGraphException("src/test/java/pratica2/casesReadWeightedGraph/case3.txt"));
 	}
 	
 	
 	@Test
-	void readWeightedGraphTest4() {
-		assertThrows(Exception.class , manager.readWeightedGraph("src/test/java/pratica2/casesReadWeightedGraph/case4.txt"));
+	public void readWeightedGraphTest4() {
+		assertEquals("Exception", testWeightedGraphException("src/test/java/pratica2/casesReadWeightedGraph/case4.txt"));
 	}
 
 	@Test
-	void readWeightedGraphTest5() {
-		assertThrows(Exception.class , manager.readWeightedGraph("src/test/java/pratica2/casesReadWeightedGraph/case5.txt"));
+	public void readWeightedGraphTest5() {
+		assertEquals("Exception", testWeightedGraphException("src/test/java/pratica2/casesReadWeightedGraph/case5.txt"));
 	}
 	
 	@Test
-	void readWeightedGraphTest6() {
-		assertFalse(testVertexType("src/test/java/pratica2/casesReadWeightedGraph/case6.txt"));
+	public void readWeightedGraphTest6() {
+		assertTrue(testVertexType("src/test/java/pratica2/casesReadWeightedGraph/case6.txt"));
 	}
 	
 	@Test
-	void readWeightedGraphTest7() {
-		assertFalse(testVertexType("src/test/java/pratica2/casesReadWeightedGraph/case7.txt"));
+	public void readWeightedGraphTest7() {
+		assertTrue(testVertexType("src/test/java/pratica2/casesReadWeightedGraph/case7.txt"));
 	}
 	
 	@Test
-	void readWeightedGraphTest8() {
-		assertFalse(testVertexType("src/test/java/pratica2/casesReadWeightedGraph/case8.txt"));
+	public void readWeightedGraphTest8() {
+		assertTrue(testVertexType("src/test/java/pratica2/casesReadWeightedGraph/case8.txt"));
 	}
 	
 	@Test
-	void readWeightedGraphTest9() {
-		assertFalse(testVertexType("src/test/java/pratica2/casesReadWeightedGraph/case9.txt"));
+	public void readWeightedGraphTest9() {
+		assertTrue(testVertexType("src/test/java/pratica2/casesReadWeightedGraph/case9.txt"));
 	}
 	
 	@Test
-	void readWeightedGraphTest10() {
-		assertFalse(testVertexType("src/test/java/pratica2/casesReadWeightedGraph/case10.txt"));
+	public void readWeightedGraphTest10() {
+		assertTrue(testVertexType("src/test/java/pratica2/casesReadWeightedGraph/case10.txt"));
 	}
 	
 	@Test
-	void readWeightedGraphTest11() {
-		assertFalse(testVertexType("src/test/java/pratica2/casesReadWeightedGraph/case11.txt"));
+	public void readWeightedGraphTest11() {
+		assertTrue(testVertexType("src/test/java/pratica2/casesReadWeightedGraph/case11.txt"));
 	}
 	
 	@Test
-	void readWeightedGraphTest12() {
-		assertFalse(testVertexType("src/test/java/pratica2/casesReadWeightedGraph/case12.txt"));
+	public void readWeightedGraphTest12() {
+		assertTrue(testVertexType("src/test/java/pratica2/casesReadWeightedGraph/case12.txt"));
 	}
 	
 	@Test
-	void readWeightedGraphTest13() {
-		assertFalse(testVertexType("src/test/java/pratica2/casesReadWeightedGraph/case13.txt"));
+	public void readWeightedGraphTest13() {
+		assertTrue(testVertexType("src/test/java/pratica2/casesReadWeightedGraph/case13.txt"));
 	}
 	
 	@Test
-	void readWeightedGraphTest14() {
-		assertFalse(testVertexType("src/test/java/pratica2/casesReadWeightedGraph/case14.txt"));
+	public void readWeightedGraphTest14() {
+		assertTrue(testVertexType("src/test/java/pratica2/casesReadWeightedGraph/case14.txt"));
 	}
 	
 	private boolean testVertexType(String path){
@@ -98,6 +98,16 @@ class ReadWeightedGraphTest {
 			return false;
 		}
 		return true;
+	}
+	
+	private String testWeightedGraphException(String path) {
+		try {
+			manager.readWeightedGraph(path);
+		} catch (Exception e) {
+			return "Exception";
+		}
+		
+		return "";
 	}
 	
 }
