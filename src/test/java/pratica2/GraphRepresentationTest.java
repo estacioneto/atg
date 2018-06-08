@@ -82,7 +82,7 @@ public class GraphRepresentationTest {
 		Scanner sc = getScanner(path);
 		while (sc.hasNext()) {
 			String line = sc.nextLine();
-			retorno += line + "\r\n";
+			retorno += line + System.lineSeparator();
 		}
 		
 		return retorno;
