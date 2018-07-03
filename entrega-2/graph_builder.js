@@ -1,4 +1,11 @@
-const input = require('./data.json');//.playlists.slice(0,300);
+// invocar com "node graph_builder.js inicio=0 fim=100" para definir partição
+
+const args = process.argv;
+const inicioParticao = (args.filter(x => x.startsWith('inicio='))[0] || '=0').split('=')[1];
+const fimParticao = (args.filter(x => x.startsWith('fim='))[0] || '=0').split('=')[1];
+
+const input = require('./data.json');
+const playlists = input.playlists;;
 
 // Grafo 
 const graph = {};
@@ -15,7 +22,7 @@ const getSongs = p => p.tracks.map(t => t.track_uri);
 const fastProportion = (p1, p2, fn) => {
     const from = fn(p1);
     const to = fn(p2);
-     
+
     let total = from.length;
     const tempMap = to.reduce((ac, it) => ({ [it]: 1 }), {});
     const both = from.reduce((ac, it) => {
@@ -79,31 +86,33 @@ const makeNode = (p1, p2) => ({
 });
 
 const main = () => {
-    console.log('Iniciando processamento de', input.length, 'playlists');
-    const parte = Math.floor(input.length / 10);
+    console.log('Iniciando processamento de', playlists.length, 'playlists');
+    const parte = Math.floor((fimParticao - inicioParticao) / 10);
 
-    input.forEach((playlist, index) => {
+    for (let index = inicioParticao; index < fimParticao; index++) {
+        const playlist = playlists[index];
+
         const links = [];
         graph[getId(playlist)] = links;
-        
-        !(index % parte) && console.log(`>> Processando ${index}/${input.length}`);
 
-        input.forEach(playlistAux => {
+        !(index % parte) && console.log(`>> Processando ${index}/${fimParticao - inicioParticao}`);
+
+        playlists.forEach(playlistAux => {
             if (playlist === playlistAux) return;
-    
+
             const node = makeNode(playlist, playlistAux);
             node.s > 0 && links.push(node);
         });
 
         links.sort((a, b) => b.s - a.s);
-    });
+    }
 };
 
-try { 
+try {
     main();
 } catch (e) {
     console.log('Extração de dados falhou com', e);
     console.log('Finalizando, salvando dados processados.');
 }
 
-require('fs').writeFileSync('graph.json', JSON.stringify(graph, null, 2));
+require('fs').writeFileSync(`graph-${inicioParticao}-${fimParticao}.json`, JSON.stringify(graph, null, 2));
