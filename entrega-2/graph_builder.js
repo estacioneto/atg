@@ -1,11 +1,10 @@
 // invocar com "node graph_builder.js inicio=0 fim=100" para definir partição
-
-const args = process.argv;
-const inicioParticao = (args.filter(x => x.startsWith('inicio='))[0] || '=0').split('=')[1];
-const fimParticao = (args.filter(x => x.startsWith('fim='))[0] || '=0').split('=')[1];
-
 const input = require('./data.json');
 const playlists = input.playlists;;
+
+const args = process.argv;
+const inicioParticao = Number((args.filter(x => x.startsWith('inicio='))[0] || '=0').split('=')[1]);
+const fimParticao = Number((args.filter(x => x.startsWith('fim='))[0] || '=0').split('=')[1]) || playlists.length;
 
 // Grafo 
 const graph = {};
@@ -86,7 +85,7 @@ const makeNode = (p1, p2) => ({
 });
 
 const main = () => {
-    console.log('Iniciando processamento de', playlists.length, 'playlists');
+    console.log('Iniciando processamento de', fimParticao - inicioParticao, 'playlists');
     const parte = Math.floor((fimParticao - inicioParticao) / 10);
 
     for (let index = inicioParticao; index < fimParticao; index++) {
