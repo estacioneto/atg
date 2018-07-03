@@ -61,18 +61,13 @@ const getSimilarityBySongs = (p1, p2) => {
  * Similaridade de músicas (Sm): proporção de músicas de P1 
  *      que estão em P2 sobre o total de músicas em P1
  * 
- * Similaridade total: Sa + ((1 - Sa) * Sm)
- * 
- * A similaridade de músicas entra como "bonus" a similaridade de artistas
+ * Similaridade total: Sa * 0.7 + Sm * 0.3
  */
 const getSimilarity = (p1, p2) => {
     const similarityByArtist = getSimilarityByArtist(p1, p2);
     const similarityBySong = getSimilarityBySongs(p1, p2);
 
-    const maxBoostSimilarity = 1 - similarityByArtist;
-    const boostBySongsSimilarity = maxBoostSimilarity * similarityBySong;
-
-    const calculated = similarityByArtist + boostBySongsSimilarity;
+    const calculated = similarityByArtist * 0.7 + similarityBySong * 0.3;
     calculated > 1 && console.log(`<<< SA: ${similarityByArtist}, SS: ${similarityBySong}`);
     return 100 * calculated;
 };
