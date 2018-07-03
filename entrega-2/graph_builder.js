@@ -23,7 +23,10 @@ const fastProportion = (p1, p2, fn) => {
     const to = fn(p2);
 
     let total = from.length;
-    const tempMap = to.reduce((ac, it) => ({ [it]: 1 }), {});
+    const tempMap = to.reduce((ac, it) => {
+        ac[it]=1;
+        return ac;
+    }, {});
     const both = from.reduce((ac, it) => {
         const matched = tempMap[it];
         if (matched == 1) {
