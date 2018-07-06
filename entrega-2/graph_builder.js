@@ -106,7 +106,6 @@ const main = () => {
   graphBuild: for (let index = inicioParticao; index < fimParticao; index++) {
     const playlist = playlists[index];
     const links = [];
-    graph[getId(playlist)] = links;
     status.vertices++;
 
     !(index % parte) &&
@@ -130,6 +129,8 @@ const main = () => {
     }
 
     links.sort((a, b) => b.s - a.s);
+    // As 30 mais semelhantes
+    graph[getId(playlist)] = links.slice(0, 30);
   }
 };
 
