@@ -7,11 +7,8 @@
 const fs = require('fs');
 const args = process.argv;
 const getArg = (arg, defaultValue = 0) =>
-    (args.filter(x => x.startsWith(`${arg}=`))[0] || `=${defaultValue}`).split(
-        '='
-    )[1];
+    (args.filter(x => x.startsWith(`${arg}=`))[0] || `=${defaultValue}`).split('=')[1];
 
-// from input
 const files = [
     'graph-0-200.json'
     , 'graph-200-400.json'
@@ -19,11 +16,14 @@ const files = [
     , 'graph-600-800.json'
     , 'graph-800-1000.json'
 ];
-// from input
-const id = getArg('p', '');
-if (!id) throw 'Você deve passar uma playlist válida';
 
-const limitRecommendations = getArg('q', 15);
+// from input
+const ID_INPUT = getArg('p', '');
+const LIMIT_REC = getArg('q', 15);
+const GROUP_SIZE = getArg('gz', 20);
+
+if (!ID_INPUT) throw 'Você deve passar uma playlist válida';
+// End input
 
 const loadConcatGraph = files => files.map(f => fs.readFileSync(f)).map(JSON.parse).reduce((ac, it) => Object.assign(ac, it), {});
 let graph = loadConcatGraph(files);
@@ -50,10 +50,10 @@ const getBestMatch = id => {
     throw 'Não existem dados suficientes para a recomendação.';
 };
 
-const getSimilarityGroup = (id, groupSize = 20) => {
+const getSimilarityGroup = (id) => {
     const group = graph[id];
     if (group.length < 5) throw 'Não existem dados suficientes para gerar grupo de similares.';
-    return group.slice(0, groupSize).map(edge => edge.p2);
+    return group.slice(0, GROUP_SIZE).map(edge => edge.p2);
 };
 
 const getSongRanking = group => group
@@ -99,7 +99,7 @@ const recommend = idPlaylistSource => {
 };
 
 (() => {
-    const r = recommend(id);
+    const r = recommend(ID_INPUT);
 
     console.log('');
     console.log('=====================');
@@ -107,8 +107,8 @@ const recommend = idPlaylistSource => {
     console.log('> Playlist de maior compatibilidade:', result.playlistBase);
     console.log('> Grupo de similaridade:', result.playlistsGrupoRecomendacao.join(', '));
     console.log('');
-    console.log(`> Recomendações: ${limitRecommendations}/${result.musicasRecomendadas.length}`);
-    console.log(result.musicasRecomendadas.slice(0, limitRecommendations).map((obj, i) => `${i+1}. ${obj.name} - ${obj.artist}`).join('\n'));
+    console.log(`> Recomendações: ${LIMIT_REC}/${result.musicasRecomendadas.length}`);
+    console.log(result.musicasRecomendadas.slice(0, LIMIT_REC).map((obj, i) => `${i + 1}. ${obj.name} - ${obj.artist}`).join('\n'));
     console.log('=====================');
     console.log('');
 })();
