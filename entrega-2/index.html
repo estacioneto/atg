@@ -97,12 +97,12 @@
                         <h3 ng-if="!sm">
                             {{t}}
                             <u>{{p.name || p.pid}}</u>
-                            <span ng-if="p.similarity">({{p.similarity.toFixed(2)}}%)</span>
+                            <span ng-if="p.similarity">(Rank: {{p.similarity}})</span>
                         </h3>
                         <h5 ng-if="sm">
                             {{t}}
                             <u>{{p.name || p.pid}}</u>
-                            <span ng-if="p.similarity">({{p.similarity.toFixed(2)}}%)</span>
+                            <span ng-if="p.similarity">(Rank: {{p.similarity}})</span>
                         </h5>
                     </div>
                     <div class="card" ng-if="showSourceInfo">
@@ -165,6 +165,7 @@
                                     <th scope="col">Nome</th>
                                     <th scope="col">Artista</th>
                                     <th scope="col">Album</th>
+                                    <th scope="col">Count</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -173,6 +174,7 @@
                                     <td>{{musica.track_name}}</td>
                                     <td>{{musica.artist_name}}</td>
                                     <td>{{musica.album_name}}</td>
+                                    <td>{{musica.count}}</td>
                                 </tr>
                             </tbody>
                         </table>

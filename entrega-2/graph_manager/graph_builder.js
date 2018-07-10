@@ -30,35 +30,35 @@ const getSongs = p => p.tracks.map(t => t.track_uri);
  * @param {Playlist} p2
  * @param {Function(p: Playlist): [String]} fn
  */
-const fastProportion = (p1, p2, fn) => {
+const fastProportion = (p1, p2, fn, rankValue) => {
   const from = fn(p1);
   const to = fn(p2);
 
-  let total = from.length;
+  // let total = from.length;
   const tempMap = to.reduce((ac, it) => {
     ac[it] = 1;
     return ac;
   }, {});
-  const both = from.reduce((ac, it) => {
+  const rankTotal = from.reduce((ac, it) => {
     const matched = tempMap[it];
     if (matched == 1) {
       tempMap[it] = 2;
-      ac++;
+      ac += rankValue;
     } else if (matched == 2) {
-      total--;
+      // total--;
     }
     return ac;
   }, 0);
 
-  return both / total;
+  return rankTotal;
 };
 
 const getSimilarityByArtist = (p1, p2) => {
-  return fastProportion(p1, p2, getArtists);
+  return fastProportion(p1, p2, getArtists, 1);
 };
 
 const getSimilarityBySongs = (p1, p2) => {
-  return fastProportion(p1, p2, getSongs);
+  return fastProportion(p1, p2, getSongs, 2);
 };
 
 /**
@@ -79,13 +79,11 @@ const getSimilarityBySongs = (p1, p2) => {
  * Similaridade total: Sa * 0.7 + Sm * 0.3
  */
 const getSimilarity = (p1, p2) => {
-  const similarityByArtist = getSimilarityByArtist(p1, p2);
-  const similarityBySong = getSimilarityBySongs(p1, p2);
+  const similarityRankArtist = getSimilarityByArtist(p1, p2);
+  const similarityRankSong = getSimilarityBySongs(p1, p2);
 
-  const calculated = similarityByArtist * 0.7 + similarityBySong * 0.3;
-  calculated > 1 &&
-    console.log(`<<< SA: ${similarityByArtist}, SS: ${similarityBySong}`);
-  return 100 * calculated;
+  const calculated = similarityRankArtist + similarityRankSong;
+  return calculated;
 };
 
 // Playlist1, Playlist2, Similarity
