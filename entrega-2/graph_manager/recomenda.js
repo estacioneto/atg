@@ -9,14 +9,10 @@ const getArg = (arg, defaultValue = 0) =>
     (args.filter(x => x.startsWith(`${arg}=`))[0] || `=${defaultValue}`).split('=')[1];
 
 const files = [
-    './graph-0-200.json'
-    , './graph-200-400.json'
-    , './graph-400-600.json'
-    , './graph-600-800.json'
-    , './graph-800-1000.json'
+    '../graph/graph.json'
 ];
 
-const playlistsData = './data.json';
+const playlistsData = './source_data/data.json';
 
 // from input
 // const ID_INPUT = getArg('p', '');

@@ -1,5 +1,5 @@
 // invocar com "node graph_builder.js inicio=0 fim=100" para definir partição
-const input = require('./data.json');
+const input = require('./source_data/data.json');
 const playlists = input.playlists;
 
 const args = process.argv;
@@ -142,6 +142,6 @@ try {
 }
 
 require('fs').writeFileSync(
-  `graph-${inicioParticao}-${fimParticao}.json`,
+  `temp_graph/graph-${inicioParticao}-${fimParticao}.json`,
   JSON.stringify(graph, null, 2)
 );
