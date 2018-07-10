@@ -1,0 +1,185 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>ATG</title>
+
+    <link rel="stylesheet" type="text/css" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+    <style>
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            background-color: rgb(250, 249, 249);
+        }
+
+        h5:hover, h3:hover {
+            cursor: pointer;
+        }
+
+        * {
+            color: rgb(24, 24, 24);
+        }
+    </style>
+</head>
+
+<body ng-app="app" ng-controller="mainController as ctrl">
+    <div class="col-sm-12 card">
+        <h2>Recomenda Músicas</h2>
+    </div>
+    <form class="form col-sm-12 card" ng-submit="ctrl.buscar(pid)">
+        <div class="form-group"></div>
+        <div class="form-group row">
+            <div class="mb-2 mx-sm-3">
+                <input type="text" name="pidinput" class="form-control" placeholder="Digite o PID da playlist" ng-model="pid">
+            </div>
+            <button class="btn btn-secondary mb-2" type="submit">
+                Recomendar
+            </button>
+        </div>
+    </form>
+    <div class="col-sm-12">
+        <h2 ng-if="!ctrl.error && !ctrl.loading && !ctrl.info">Pesquise algo!</h2>
+        <h2 ng-if="ctrl.error" class="text-danger" ng-bind="ctrl.error"></h2>
+        <h3 ng-if="ctrl.loading">Processando{{ ctrl.icon }}</h3>
+        <div ng-if="ctrl.info">
+            <playlist t="Playlist entrada:" p="ctrl.info.inputPlaylist"></playlist>
+            <playlist t="Playlist base:" p="ctrl.info.basePlaylist"></playlist>
+            
+            <h3 ng-click="sgs = !sgs"><u>Grupo de similaridade</u></h3>
+            <playlist ng-if="sgs" ng-repeat="pp in ctrl.info.recommendationGroup" 
+                t="{{$index + 1}}" p="pp" sm="true">
+            </playlist>
+
+            <h3 ng-click="sgm = !sgm"><u>Musicas recomendadas</u></h3>
+            <musicas ng-if="sgm" m="ctrl.info.recommendedSongs"></musicas>
+        </div>
+    </div>
+
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/node_modules/angular/angular.js"></script>
+    <script>
+        angular.module('app', [])
+            .controller('mainController', function ($http, $interval) {
+                this.info = null;
+                this.error = null;
+                this.loading = null;
+                this.icon = '.';
+                $interval(() => {
+                    this.icon = (this.icon + '.').substr(0, this.icon.length % 5 + 1);
+                }, 200);
+
+                this.buscar = pid => {
+                    this.error = null;
+                    this.loading = true;
+                    this.info = null;
+                    $http.get(`/?pid=${pid}`).then(response => {
+                        this.info = response.data;
+                    }).catch(err => {
+                        this.error = 'Houve um erro ao buscar.';
+                    }).finally(() => {
+                        this.loading = null;
+                    });
+                };
+
+            })
+            .directive('playlist', function() {
+                return {
+                    restrict: 'E',
+                    scope: {
+                        t: '@',
+                        p: '=',
+                        sm: '=?'
+                    },
+                    template: `
+                    <div ng-click="showSourceInfo = !showSourceInfo">
+                        <h3 ng-if="!sm">
+                            {{t}}
+                            <u>{{p.name || p.pid}}</u>
+                            <span ng-if="p.similarity">({{p.similarity.toFixed(2)}}%)</span>
+                        </h3>
+                        <h5 ng-if="sm">
+                            {{t}}
+                            <u>{{p.name || p.pid}}</u>
+                            <span ng-if="p.similarity">({{p.similarity.toFixed(2)}}%)</span>
+                        </h5>
+                    </div>
+                    <div class="card" ng-if="showSourceInfo">
+                        <div class="card-block">
+                            <div class="col-sm-12 row no-gutters">
+                                <div class="col-sm-4">
+                                    <div>
+                                        <b>Nome</b>
+                                    </div>
+                                    <div>{{p.name}}</div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div>
+                                        <b>PID</b>
+                                    </div>
+                                    <div>{{p.pid}}</div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div>
+                                        <b>Musicas</b>
+                                    </div>
+                                    <div>{{p.num_tracks}}</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 row no-gutters">
+                                <div class="col-sm-4">
+                                    <div>
+                                        <b>Num Artistas</b>
+                                    </div>
+                                    <div>{{p.num_artists}}</div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div>
+                                        <b>Albuns</b>
+                                    </div>
+                                    <div>{{p.num_albums}}</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <b>Músicas</b>
+                            </div>
+                            <musicas m="p.tracks"></musicas>
+                        </div>
+                    </div>
+                    `
+                }
+            })
+            .directive('musicas', function(){
+                return {
+                    restrict: 'E',
+                    scope: {
+                        m: '='
+                    },
+                    template: `
+                    <div class="col-sm-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Artista</th>
+                                    <th scope="col">Album</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="musica in m">
+                                    <th scope="row">{{$index + 1}}</th>
+                                    <td>{{musica.track_name}}</td>
+                                    <td>{{musica.artist_name}}</td>
+                                    <td>{{musica.album_name}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>`
+                }
+            });
+    </script>
+</body>
+
+</html>
